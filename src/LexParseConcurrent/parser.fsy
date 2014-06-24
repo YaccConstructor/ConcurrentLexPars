@@ -1,0 +1,37 @@
+%{
+
+#nowarn "62";; 
+
+%}
+
+%token SEMICOLON
+%token EQUAL
+%token STAR
+%token PLUS
+%token MINUS
+%token LPAREN
+%token RPAREN
+%token EOF
+%token NUM
+%token IDENT
+
+%start file
+%type <int> file
+
+%%
+file: f EOF {1}
+f: stmt {1} 
+      | f stmt {1} 
+       
+
+
+stmt: IDENT EQUAL expr SEMICOLON{1}
+
+expr: expr PLUS term {1}
+     | expr MINUS term {1}
+     | term {1}
+
+term: term STAR factor {1}
+      | factor{1}
+
+factor : IDENT {1}| NUM {1} | LPAREN expr RPAREN {1}

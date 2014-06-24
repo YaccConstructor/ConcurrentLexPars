@@ -1,0 +1,23 @@
+{
+module Calc.Lexer
+open Calc.Parser
+open Microsoft.FSharp.Text.Lexing
+}
+
+let digit = ['0'-'9']
+let ch = ['a'-'z']
+let whitespace = [' ' '\t' '\r' '\n']
+
+rule token = parse
+| whitespace { token lexbuf }
+| ch+ { IDENT }
+| digit+ { NUM }
+| '-' { MINUS  }
+| '(' { LPAREN }
+| ')' { RPAREN }
+| '+' { PLUS }
+| '*' { STAR }
+| '=' { EQUAL }
+| ';' { SEMICOLON }
+| eof { EOF }
+| _ { failwithf "unexpected input" }
